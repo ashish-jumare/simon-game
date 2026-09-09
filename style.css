@@ -1,40 +1,181 @@
-body{
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+body {
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-family: Arial, sans-serif;
+
+    background: #f5f5f5;
+
+    color: #222;
+}
+
+
+.game {
+    width: 350px;
+
     text-align: center;
 }
 
-.btn{
-    height: 200px;
-    width: 200px;
-    border-radius: 20%;
-    border: 10px solid black;
-    margin: 2rem;
+
+h1 {
+    font-size: 32px;
+
+    margin-bottom: 8px;
 }
 
-.btn-container{
-    display: flex;
-    justify-content: center;
+
+.level {
+    color: #666;
+
+    margin-bottom: 20px;
+
+    font-size: 17px;
 }
 
-.red{
-    background-color: #d95980;
+
+.board {
+    width: 300px;
+    height: 300px;
+
+    margin: 0 auto 20px;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 10px;
 }
 
-.yellow{
-    background-color: #f99b45;
+
+.pad {
+    border: none;
+
+    border-radius: 18px;
+
+    cursor: pointer;
+
+    opacity: 0.75;
+
+    transition:
+        transform 0.1s ease,
+        opacity 0.1s ease,
+        filter 0.1s ease;
 }
 
-.green{
-    background-color: #63aac0;
+
+.pad:hover {
+    opacity: 0.9;
 }
 
-.purple{
-    background-color: #819ff9;
+
+.pad:disabled {
+    cursor: default;
 }
 
-.flash{
-    background-color: white;
+
+/* Colors */
+
+.green {
+    background: #2ecc71;
 }
 
-.userflash{
-    background-color: green;
+
+.red {
+    background: #e74c3c;
+}
+
+
+.yellow {
+    background: #f1c40f;
+}
+
+
+.blue {
+    background: #3498db;
+}
+
+
+/* Flash effect */
+
+.pad.active {
+    opacity: 1;
+
+    filter: brightness(1.5);
+
+    transform: scale(0.95);
+}
+
+
+/* Message */
+
+#message {
+    min-height: 24px;
+
+    margin-bottom: 15px;
+
+    color: #555;
+
+    font-size: 16px;
+}
+
+
+/* Start button */
+
+.start-button {
+    border: none;
+
+    border-radius: 8px;
+
+    padding: 11px 20px;
+
+    background: #222;
+
+    color: white;
+
+    font-size: 15px;
+
+    cursor: pointer;
+}
+
+
+.start-button:hover {
+    background: #444;
+}
+
+
+/* Game over */
+
+.game-over {
+    color: #d32f2f !important;
+
+    font-weight: bold;
+}
+
+
+/* Mobile */
+
+@media (max-width: 400px) {
+
+    .game {
+        width: 100%;
+
+        padding: 20px;
+    }
+
+
+    .board {
+        width: 280px;
+        height: 280px;
+    }
+
 }
