@@ -12,30 +12,46 @@ body {
     justify-content: center;
     align-items: center;
 
-    font-family: Arial, sans-serif;
+    font-family: "Trebuchet MS", Arial, sans-serif;
 
-    background: #f5f5f5;
+    background:
+        radial-gradient(circle at top left, #dff7ff 0, transparent 38%),
+        linear-gradient(135deg, #f7fbff, #e8edf5);
 
     color: #222;
 }
 
 
 .game {
-    width: 350px;
+    width: min(390px, 100%);
+
+    padding: 30px 24px;
+
+    border: 1px solid rgba(255, 255, 255, 0.8);
+
+    border-radius: 28px;
+
+    background: rgba(255, 255, 255, 0.78);
+
+    box-shadow: 0 24px 60px rgba(49, 68, 99, 0.16);
 
     text-align: center;
 }
 
 
 h1 {
-    font-size: 32px;
+    color: #17233d;
+
+    font-size: 34px;
+
+    letter-spacing: 1px;
 
     margin-bottom: 8px;
 }
 
 
 .level {
-    color: #666;
+    color: #65718a;
 
     margin-bottom: 20px;
 
@@ -43,9 +59,55 @@ h1 {
 }
 
 
+.score-board {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+
+    margin-bottom: 22px;
+}
+
+
+.score-card {
+    width: 120px;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 10px 16px;
+
+    border-radius: 14px;
+
+    background: #17233d;
+
+    color: white;
+}
+
+
+.best-score-card {
+    background: #2c426d;
+}
+
+
+.score-label {
+    color: #b9c8e6;
+
+    font-size: 12px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+}
+
+
+.score-card strong {
+    font-size: 25px;
+}
+
+
 .board {
-    width: 300px;
-    height: 300px;
+    width: min(300px, 100%);
+    aspect-ratio: 1;
 
     margin: 0 auto 20px;
 
@@ -58,9 +120,9 @@ h1 {
 
 
 .pad {
-    border: none;
+    border: 5px solid rgba(255, 255, 255, 0.8);
 
-    border-radius: 18px;
+    border-radius: 22px;
 
     cursor: pointer;
 
@@ -75,6 +137,8 @@ h1 {
 
 .pad:hover {
     opacity: 0.9;
+
+    transform: translateY(-2px);
 }
 
 
@@ -83,7 +147,6 @@ h1 {
 }
 
 
-/* Colors */
 
 .green {
     background: #2ecc71;
@@ -105,7 +168,6 @@ h1 {
 }
 
 
-/* Flash effect */
 
 .pad.active {
     opacity: 1;
@@ -116,29 +178,29 @@ h1 {
 }
 
 
-/* Message */
 
 #message {
     min-height: 24px;
 
     margin-bottom: 15px;
 
-    color: #555;
+    color: #4d5b75;
 
     font-size: 16px;
+
+    font-weight: bold;
 }
 
 
-/* Start button */
 
 .start-button {
-    border: none;
+    border: 2px solid #17233d;
 
     border-radius: 8px;
 
-    padding: 11px 20px;
+    padding: 12px 24px;
 
-    background: #222;
+    background: #17233d;
 
     color: white;
 
@@ -149,11 +211,12 @@ h1 {
 
 
 .start-button:hover {
-    background: #444;
+    background: #2c426d;
+
+    transform: translateY(-1px);
 }
 
 
-/* Game over */
 
 .game-over {
     color: #d32f2f !important;
@@ -162,20 +225,18 @@ h1 {
 }
 
 
-/* Mobile */
 
 @media (max-width: 400px) {
 
     .game {
         width: 100%;
 
-        padding: 20px;
+        padding: 25px 18px;
     }
 
 
     .board {
-        width: 280px;
-        height: 280px;
+        width: min(280px, 100%);
     }
 
 }

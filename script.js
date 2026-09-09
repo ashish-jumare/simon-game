@@ -1,9 +1,5 @@
-// ========================================
-// SIMON GAME
-// ========================================
 
 
-// Available colors
 const colors = [
     "green",
     "red",
@@ -12,7 +8,6 @@ const colors = [
 ];
 
 
-// Get HTML elements
 const startButton =
     document.getElementById("startButton");
 
@@ -22,25 +17,36 @@ const message =
 const levelText =
     document.getElementById("level");
 
+const scoreLabel =
+    document.getElementById("scoreLabel");
+
+const bestScoreText =
+    document.getElementById("bestScore");
+
 const pads =
     document.querySelectorAll(".pad");
 
 
-// Game variables
 let gameSequence = [];
 
 let playerSequence = [];
 
 let level = 0;
 
+let score = 0;
+
+const bestScoreKey = "simonBestScore";
+
+let bestScore =
+    Number(localStorage.getItem(bestScoreKey)) || 0;
+
+bestScoreText.textContent = bestScore;
+
 let gameRunning = false;
 
 let acceptingInput = false;
 
 
-// ========================================
-// START GAME
-// ========================================
 
 startButton.addEventListener(
     "click",
@@ -50,20 +56,24 @@ startButton.addEventListener(
 
 function startGame() {
 
-    // Reset game
     gameSequence = [];
 
     playerSequence = [];
 
     level = 0;
 
+    score = 0;
+
     gameRunning = true;
 
     acceptingInput = false;
 
 
-    // Update screen
     levelText.textContent = "0";
+
+    document.getElementById("score").textContent = "0";
+
+    scoreLabel.textContent = "Score";
 
     message.textContent =
         "Watch the sequence";
@@ -78,24 +88,18 @@ function startGame() {
         "Restart Game";
 
 
-    // Start first level
     nextLevel();
 }
 
 
-// ========================================
-// NEXT LEVEL
-// ========================================
 
 function nextLevel() {
 
-    // Clear player's previous input
     playerSequence = [];
 
     acceptingInput = false;
 
 
-    // Increase level
     level++;
 
     levelText.textContent =
@@ -106,7 +110,6 @@ function nextLevel() {
         "Watch the sequence";
 
 
-    // Generate random color
     const randomIndex =
         Math.floor(
             Math.random() * colors.length
@@ -117,35 +120,27 @@ function nextLevel() {
         colors[randomIndex];
 
 
-    // Add color to sequence
     gameSequence.push(
         randomColor
     );
 
 
-    // Play sequence
     playSequence();
 }
 
 
-// ========================================
-// PLAY COMPUTER SEQUENCE
-// ========================================
 
 async function playSequence() {
 
     acceptingInput = false;
 
 
-    // Disable buttons
     setPadsDisabled(true);
 
 
-    // Small delay before sequence
     await sleep(500);
 
 
-    // Play each color
     for (
         let i = 0;
         i < gameSequence.length;
@@ -163,7 +158,6 @@ async function playSequence() {
     }
 
 
-    // Enable player input
     setPadsDisabled(false);
 
     acceptingInput = true;
@@ -174,9 +168,6 @@ async function playSequence() {
 }
 
 
-// ========================================
-// FLASH PAD
-// ========================================
 
 function flashPad(color) {
 
@@ -219,9 +210,6 @@ function flashPad(color) {
 }
 
 
-// ========================================
-// PLAYER CLICK
-// ========================================
 
 pads.forEach(
     function(pad) {
@@ -230,7 +218,6 @@ pads.forEach(
             "click",
             function() {
 
-                // Ignore click when game isn't accepting input
                 if (
                     !gameRunning ||
                     !acceptingInput
@@ -239,22 +226,18 @@ pads.forEach(
                 }
 
 
-                // Get selected color
                 const selectedColor =
                     pad.dataset.color;
 
 
-                // Add to player sequence
                 playerSequence.push(
                     selectedColor
                 );
 
 
-                // Small click animation
                 flashPlayerPad(pad);
 
 
-                // Check answer
                 checkAnswer();
 
             }
@@ -264,9 +247,6 @@ pads.forEach(
 );
 
 
-// ========================================
-// PLAYER PAD ANIMATION
-// ========================================
 
 function flashPlayerPad(pad) {
 
@@ -286,30 +266,21 @@ function flashPlayerPad(pad) {
 }
 
 
-// ========================================
-// CHECK PLAYER ANSWER
-// ========================================
 
 function checkAnswer() {
 
-    // Position of the last clicked color
     const currentIndex =
         playerSequence.length - 1;
 
 
-    // Correct color at this position
     const correctColor =
         gameSequence[currentIndex];
 
 
-    // Player's color
     const playerColor =
         playerSequence[currentIndex];
 
 
-    // ------------------------------------
-    // WRONG ANSWER
-    // ------------------------------------
 
     if (
         playerColor !== correctColor
@@ -321,9 +292,6 @@ function checkAnswer() {
     }
 
 
-    // ------------------------------------
-    // WHOLE SEQUENCE COMPLETED
-    // ------------------------------------
 
     if (
         playerSequence.length ===
@@ -331,6 +299,10 @@ function checkAnswer() {
     ) {
 
         acceptingInput = false;
+
+        score++;
+
+        document.getElementById("score").textContent = score;
 
         message.textContent =
             "Correct!";
@@ -348,9 +320,6 @@ function checkAnswer() {
 }
 
 
-// ========================================
-// GAME OVER
-// ========================================
 
 function gameOver() {
 
@@ -361,9 +330,22 @@ function gameOver() {
 
     setPadsDisabled(true);
 
+    if (score > bestScore) {
+        bestScore = score;
+
+        localStorage.setItem(
+            bestScoreKey,
+            bestScore
+        );
+
+        bestScoreText.textContent = bestScore;
+    }
+
 
     message.textContent =
-        "Game Over - Level " + level;
+        "Game Over - Score: " + score;
+
+    scoreLabel.textContent = "Final Score";
 
 
     message.classList.add(
@@ -376,9 +358,6 @@ function gameOver() {
 }
 
 
-// ========================================
-// DISABLE / ENABLE PADS
-// ========================================
 
 function setPadsDisabled(
     disabled
@@ -394,9 +373,6 @@ function setPadsDisabled(
 }
 
 
-// ========================================
-// WAIT FUNCTION
-// ========================================
 
 function sleep(milliseconds) {
 
